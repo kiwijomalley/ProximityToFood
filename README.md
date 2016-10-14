@@ -2,13 +2,13 @@
 
 Data from the Framingham Heart Study is not freely available due to patient confidentiality. The Framingham Heart Study has a formal process for requesting data, and anyone can request data directly from this via: https://www.framinghamheartstudy.org/researchers/application-review.php.  
 
-In lieu of the actual data, we provide a synthetic data set named simdata2wbugs.txt. The size and structure of these data are identical to the actual data set, allowing the exact same code to be used to perform the Bayesian analysis on it. The data is described in the following. We intend to also make the data and accompanying code available on GitHub.
+In lieu of the actual data, we provide a synthetic data set named simdata4wbugs.txt. The size and structure of these data are identical to the actual data set, allowing the exact same code to be used to perform the Bayesian analysis on it. The data is described in the following.
 
 The following files are relevant:
 R script: RealBMIBRugs.r
 WinBUGS model code: RealBMICodeInt.r
 WinBUGS constant data: RealBMIConst4.txt
-WinBUGS Synthetic data set: simdata2wbugs.txt
+WinBUGS Synthetic data set: simdata4wbugs.txt
 WinBUGS initial values: RealBMIInits.txt
 
 Data dictionary
