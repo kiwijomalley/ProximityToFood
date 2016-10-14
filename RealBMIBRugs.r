@@ -1,68 +1,44 @@
-# AnalRealCode.r
-# Runs DistToFoodReal.txt model in R using Brugs
-# Must install Brugs package first! Obtain from packages pulldown menu
-#
-# Likely to run better on 32-bit R than 64-bit R!
-######################################
+##########################################################################################
+# Runs analysis in R using Brugs
+# Must install Brugs package first!
+##########################################################################################
 
 library(BRugs)
 
-#Set up 
-#rsource='//tdi-sas.dartmouth.edu/jomalley/Dartmouth/Biostatistics/DistanceToFood/Code'
-#rsource='Volumes/JOmalley/Dartmouth/Biostatistics/DistanceToFood/Code/'
-#The following line works:
-#rsource='H:/Dartmouth/Biostatistics/DistanceToFood/Code'
-setwd(rsource) #Working directory
-datdir='../Data/' #Directory to store data (you need to set this up)
-outdir='../Output/' #Directory to store output (you need to set this up)
-list.files() #Check WD
+#Set up: Place this script and the associated data in the appropriate directories
 
 #Conditions under which to run model
 restrict4=1 #Restrict to 4-town region
 tractcf=0 #Tract carried forward from first wave
 prodnorm=0 #Use of a product-normal prior
-
 if (prodnorm==1) {
  restrict4=1 
  tractcf=0 
 }
 
-modelCheck("RealBMICodeInt.r")	 # Check Model
-#modelCheck("RealBMICodeIntProdNorm.r")
-#modelCheck("RealBMICodeIntArea0.r")
-#modelCheck("RealBMICodeIntRSlope0.r")
-#modelCheck("RealBMICodeIntSerial0.r")
-if (restrict4==1) {            # Load Data
- modelData("RealBMIConst4.txt")
- if (tractcf==0) {
-  modelData("RealBMIData4.txt")
- } else {
-  modelData("RealBMIData4cf.txt")
- }
-} else {
- modelData("RealBMIConst14.txt")
- modelData("RealBMIData14.txt")
-} 
+modelCheck("RealBMICodeInt.r")   # Check Model written in WinBUGS
+modelData("simdata2wbugs.txt")    # Load data
+modelData("RealBMIConst4.txt") #Constants
 modelCompile(numChains=1)	 # Compile with specified number of chains
 
 if (prodnorm==1) {
- modelInits("RealBMIInitsPN.txt") # Inits
+ modelInits("RealBMIInitsPN.txt") # Initial values under product normal prior
 } else {
- modelInits("RealBMIInits.txt") # Inits
+ modelInits("RealBMIInits.txt") # Initial values under inverse-Wishart prior
 }
-#modelInits (c("AnyPsychInParam2.txt", "AnyPsychInParam2.txt"))	# If two chains
+#modelInits (c("AnyPsychInParam2.txt", "AnyPsychInParam2.txt"))	# If use two chains
 
 modelGenInits() #Generate initial values for remaining parameters
 
 samplesClear('*')
 
 # Samples
-samplesSetBeg(20000)		# Start Storing after burn-in of 4000
+samplesSetBeg(20000)		# Start Storing after burn-in of 20000
 samplesSet(c("be","sigma","rho","taurand","corrand","tauarea","corarea","iccind","bothfdist","onefdist"))
 samplesSetThin(1)			# Thin by 1
 samplesSetFirstChain(1)
 samplesSetLastChain(1)
-modelUpdate(100000) #40000
+modelUpdate(100000)
 
 # Results for Chain 1
 results.chain1<-samplesStats(c("be","sigma","rho","taurand","corrand","tauarea","corarea","iccind","bothfdist","onefdist"), 
