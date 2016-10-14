@@ -1,0 +1,1 @@
+list(Nobs=11055, Npat=2889, Narea=23, P=22)
