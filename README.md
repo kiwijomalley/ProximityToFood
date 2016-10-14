@@ -35,6 +35,8 @@ The first row of the data set contains the above variable names. Workplace dista
 
 Instructions for running code:
 
+The R script contains the commands to setup the analysis, call WinBUGS, and perform post-estimation analysis and presentation of the results. The WinBUGS code performs for the model estimation. The entire analysis is performed by running the R code as WinBUGS is called automatically. The steps are as follows:
+
 1) Place the R script and WinBUGS files in the directory from which you want to perform the analysis
 2) Ensure that the synthetic data set is in the directory where the R script calls it
 3) Run the R script by typing source('RealBMIBRugs.r') or using an equivalent method
