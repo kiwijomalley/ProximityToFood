@@ -23,7 +23,7 @@ yob: Year of birth of individual
 smokes: Whether individual is a current smoker
 male: Whether individual has male gender
 married: Whether individual is currently married
-educ: Educational level of individual (0 = Did not complete high-school, 1 = Completed high school; 2 = College)
+educ: educ: Educational level of individual (0 = High-school or less, 1 = Completed high school; 2 = Other)
 tractpov: Percent of households below the poverty line in census tract where individual lived
 etractpov: Percent of households below the poverty line in census tract where individual was employed
 unemploy: Whether or not individual was unemployed
