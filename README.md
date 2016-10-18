@@ -5,11 +5,11 @@ Data from the Framingham Heart Study is not freely available due to patient conf
 In lieu of the actual data, we provide a pseudo data set named simdata4wbugs.txt. The size and structure of these data are identical to the actual data set, allowing the exact same code to be used to perform the Bayesian analysis on it. The data is described in the following.
 
 The following files are relevant:
-R script: RealBMIBRugs.r
-WinBUGS model code: RealBMICodeInt.r
-WinBUGS constant data: RealBMIConst4.txt
-WinBUGS Synthetic data set: simdata4wbugs.txt
-WinBUGS initial values: RealBMIInits.txt
+R script: RealBMIBRugs.r;
+WinBUGS model code: RealBMICodeInt.r;
+WinBUGS constant data: RealBMIConst4.txt;
+WinBUGS Synthetic data set: simdata4wbugs.txt;
+WinBUGS initial values: RealBMIInits.txt;
 
 Data dictionary
 
