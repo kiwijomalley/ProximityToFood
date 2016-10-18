@@ -14,7 +14,6 @@ WinBUGS initial values: RealBMIInits.txt
 Data dictionary
 
 ID: The identification number of the individual. Ranges from 1 to 2,889.
-
 wave: The Framingham Heart Study exam wave; ranges from 1 to 8 for the Offspring cohort and 6 to 8 for the Omni cohort, which only started in wave 6 of the offspring cohort
 
 Tobs: The total number of exams the individual attended 
@@ -55,4 +54,4 @@ The R script contains the commands to setup the analysis, call WinBUGS, and perf
 
 1) Place the R script and WinBUGS files in the directory from which you want to perform the analysis
 2) Ensure that the synthetic data set is in the directory where the R script calls it
-3) Run the R script by typing source('RealBMIBRugs.r') or using an equivalent method
+3) Run the R script by typing source('RealBMIBRugs.r') or using an equivalent method.
