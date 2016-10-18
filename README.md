@@ -14,6 +14,7 @@ WinBUGS initial values: RealBMIInits.txt
 Data dictionary
 
 ID: The identification number of the individual. Ranges from 1 to 2,889.
+
 wave: The Framingham Heart Study exam wave; ranges from 1 to 8 for the Offspring cohort and 6 to 8 for the Omni cohort, which only started in wave 6 of the offspring cohort
 
 Tobs: The total number of exams the individual attended 
