@@ -2,9 +2,10 @@
 
 Data from the Framingham Heart Study is not freely available due to patient confidentiality. The Framingham Heart Study has a formal process for requesting data, and anyone can request data directly from this via: https://www.framinghamheartstudy.org/researchers/application-review.php.  
 
-In lieu of the actual data, we provide a pseudo data set named simdata4wbugs.txt. The size and structure of these data are identical to the actual data set, allowing the exact same code to be used to perform the Bayesian analysis on it. The data is described in the following.
+In lieu of the actual data, we provide a pseudo data set named simdata4wbugs.txt. The size and structure of these data are identical to the actual data set, allowing the exact same code to be used to perform the Bayesian analysis on it. The data are described in the following.
 
-The following files are relevant: <br \>
+Relevant files
+
  R script: RealBMIBRugs.r <br \>
  WinBUGS model code: RealBMICodeInt.r <br \>
  WinBUGS constant data: RealBMIConst4.txt <br \>
@@ -12,6 +13,7 @@ The following files are relevant: <br \>
  WinBUGS initial values: RealBMIInits.txt <br \>
 
 Data dictionary <br \>
+
  ID: The identification number of the individual. Ranges from 1 to 2,889. <br \>
  wave: The Framingham Heart Study exam wave; ranges from 1 to 8 for the Offspring cohort and 6 to 8 for the Omni cohort, which only started in wave 6 of the offspring cohort <br \>
  Tobs: The total number of exams the individual attended <br \>
@@ -35,6 +37,7 @@ The first row of the data set contains the above variable names. Workplace dista
 Instructions:
 
 The R script contains the commands to setup the analysis, call WinBUGS, and perform post-estimation analysis and presentation of the results. The WinBUGS code performs for the model estimation. The entire analysis is performed by running the R code as WinBUGS is called automatically. The steps are as follows:
+
  1) Place the R script and WinBUGS files in the directory from which you want to perform the analysis <br \>
  2) Ensure that the synthetic data set is in the directory where the R script calls it <br \>
  3) Run the R script by typing source('RealBMIBRugs.r') or using an equivalent method <br \>
