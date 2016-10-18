@@ -5,17 +5,18 @@ Data from the Framingham Heart Study is not freely available due to patient conf
 In lieu of the actual data, we provide a pseudo data set named simdata4wbugs.txt. The size and structure of these data are identical to the actual data set, allowing the exact same code to be used to perform the Bayesian analysis on it. The data is described in the following.
 
 The following files are relevant:
-R script: RealBMIBRugs.r
-WinBUGS model code: RealBMICodeInt.r
-WinBUGS constant data: RealBMIConst4.txt
-WinBUGS Synthetic data set: simdata4wbugs.txt
-WinBUGS initial values: RealBMIInits.txt
+	R script: RealBMIBRugs.r
+	WinBUGS model code: RealBMICodeInt.r
+	WinBUGS constant data: RealBMIConst4.txt
+	WinBUGS Synthetic data set: simdata4wbugs.txt
+	WinBUGS initial values: RealBMIInits.txt
+
 
 Data dictionary
 
-ID: The identification number of the individual. Ranges from 1 to 2,889.
-wave: The Framingham Heart Study exam wave; ranges from 1 to 8 for the Offspring cohort and 6 to 8 for the Omni cohort, which only started in wave 6 of the offspring cohort
-Tobs: The total number of exams the individual attended 
+ID:	The identification number of the individual. Ranges from 1 to 2,889.
+wave:	The Framingham Heart Study exam wave; ranges from 1 to 8 for the Offspring cohort and 6 to 8 for the Omni cohort, which only started in wave 6 of the offspring cohort
+Tobs:	The total number of exams the individual attended 
 TractHome: The census tract where the individual lived
 TractWork: The census tract where an individual was employed (if employed)
 BMI: Body Mass Index
