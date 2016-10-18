@@ -1,3 +1,4 @@
+*svg eol=lf
 # Proximity To Food Synthetic Data Analysis
 
 Data from the Framingham Heart Study is not freely available due to patient confidentiality. The Framingham Heart Study has a formal process for requesting data, and anyone can request data directly from this via: https://www.framinghamheartstudy.org/researchers/application-review.php.  
