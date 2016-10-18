@@ -11,12 +11,11 @@ The following files are relevant:
 	WinBUGS Synthetic data set: simdata4wbugs.txt
 	WinBUGS initial values: RealBMIInits.txt
 
-
 Data dictionary
 
-ID:	The identification number of the individual. Ranges from 1 to 2,889.
-wave:	The Framingham Heart Study exam wave; ranges from 1 to 8 for the Offspring cohort and 6 to 8 for the Omni cohort, which only started in wave 6 of the offspring cohort
-Tobs:	The total number of exams the individual attended 
+ID: The identification number of the individual. Ranges from 1 to 2,889. \\
+wave: The Framingham Heart Study exam wave; ranges from 1 to 8 for the Offspring cohort and 6 to 8 for the Omni cohort, which only started in wave 6 of the offspring cohort
+Tobs: The total number of exams the individual attended 
 TractHome: The census tract where the individual lived
 TractWork: The census tract where an individual was employed (if employed)
 BMI: Body Mass Index
@@ -24,7 +23,7 @@ yob: Year of birth of individual
 smokes: Whether individual is a current smoker
 male: Whether individual has male gender
 married: Whether individual is currently married
-educ: educ: Educational level of individual (0 = High-school or less, 1 = Completed high school; 2 = Other)
+educ: Educational level of individual (0 = High-school or less, 1 = Completed high school; 2 = Other)
 tractpov: Percent of households below the poverty line in census tract where individual lived
 etractpov: Percent of households below the poverty line in census tract where individual was employed
 unemploy: Whether or not individual was unemployed
