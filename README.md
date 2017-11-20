@@ -7,7 +7,9 @@ In lieu of the actual data, we provide a synthetic data set named simdata.txt. T
 Relevant files
 
  R script: RealBMIJAGS.R <br \>
+ 
  JAGS model code: RealBMICodeIntIW.bug <br \>
+ 
  Synthetic data set: simdata.txt <br \>
 
 Data dictionary <br \>
