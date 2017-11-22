@@ -5,40 +5,17 @@ library(rjags)
 coda.options(combine.plots=TRUE,combine.stats=TRUE)
 
 #Specify filename of JAGS code for Bayesian analysis and data in and output directories
-rsource="/Volumes/STORAGE/JOMalley/Dartmouth/Biostatistics/DistanceToFood/Code" #If run on a Linux server
+rsource="Enter directory where code is stored" #If run on a Linux server
 setwd(rsource)
-datdir="../Data/" #Directory to store data
-outdir="../Output/" #Directory to store output
+datdir="../Data/" #Sub-directory to store data
+outdir="../Output/" #Sub-directory to store output
 
 #Specify code and initial values to use
-IW=1
-subtype=1
-if (IW==1) {
- if (subtype==1) {
-  JAGScode<-"RealBMICodeIntIW.bug"
- } else if (subtype==2) {
-  JAGScode<-"RealBMICodeIntArea0.bug"
- } else if (subtype==3) {
-  JAGScode<-"RealBMICodeIntRSlope0.bug"
- } else {
-  JAGScode<-"RealBMICodeIntSerial0.bug"
- } 
- IC<-list(be=c(30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), isigma=0.25, u=0.5) #Initial values
-} else {
- JAGScode<-"RealBMICodeIntProdNorm.bug"
- IC<-list(be=c(30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), isigma=0.25, ipntauarea=c(1, 0.1), ipntaurand=c(1, 0.1), psirand=0, psiarea=0, u=0.5) #Initial values	
-}
+JAGScode<-"RealBMICodeIntIW.bug"
+IC<-list(be=c(30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), isigma=0.25, u=0.5) #Initial values
 
 #Read in data
-datatype=1
-if (datatype==1) {
- BMIdata<-read.table(paste(datdir,"simdata.txt",sep=""),sep=" ",col.names=c("ID", "wave", "Omni", "Tobs", "TractHome", "TractWork", "BMI", "yob", "smokes", "male", "married", "educ", "tractpov", "etractpov", "unemploy", "DistHome", "DistWork", "DriveDist"), skip=1) #Read in data for analysis
- #BMIdata<-read.table(paste(datdir,"datawbugs4town.txt",sep=""),sep=" ",col.names=c("ID", "wave", "Omni", "Tobs", "TractHome", "TractWork", "BMI", "yob", "smokes", "male", "married", "educ", "tractpov", "etractpov", "unemploy", "DistHome", "DistWork", "DriveDist"), skip=1) #Read in data for analysis
-} else if (datatype==2) {
- BMIdata<-read.table(paste(datdir,"datawbugs14town.txt",sep=""),sep=" ",col.names=c("ID", "wave", "Omni", "Tobs", "TractHome", "TractWork", "BMI", "yob", "smokes", "male", "married", "educ", "tractpov", "etractpov", "unemploy", "DistHome", "DistWork", "DriveDist"), skip=1) #Read in data for analysis
-} else {
- BMIdata<-read.table(paste(datdir,"datawbugs4towncf.txt",sep=""),sep=" ",col.names=c("ID", "wave", "Omni", "Tobs", "TractHome", "TractWork", "BMI", "yob", "smokes", "male", "married", "educ", "tractpov", "etractpov", "unemploy", "DistHome", "DistWork", "DriveDist"), skip=1) #Read in data for analysis
-}
+BMIdata<-read.table(paste(datdir,"simdata.txt",sep=""),sep=" ",col.names=c("ID", "wave", "Omni", "Tobs", "TractHome", "TractWork", "BMI", "yob", "smokes", "male", "married", "educ", "tractpov", "etractpov", "unemploy", "DistHome", "DistWork", "DriveDist"), skip=1) #Read in data for analysis
 
 #Define parameters and operating characteristics of MCMC procedure
 parameters = c("be", "sigma", "rho", "taurand", "tauarea", "corrand", "corarea")    # The parameter(s) to be monitored.
@@ -110,7 +87,7 @@ autocorr.plot(corareaSample[1:nIter],main="MCMC Chain for p",auto.layout=FALSE)
 dev.copy2eps(file=paste(outdir,"AutoCorrPlotIW4sim.eps",sep=""), width=6, height=6, horizontal=FALSE) #to file
 
 
-## Generate statistical inferences ##
+## Generate statistical inferences and outputs ##
 
 #Plots of drawn values
 par(mfrow=c(3,2), srt=0, mai=c(0.6, 0.6, 0.4, 0.2), mgp=c(2,1,0))
