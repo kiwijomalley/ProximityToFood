@@ -1,8 +1,6 @@
 # Proximity To Food Synthetic Data Analysis
 
-Data from the Framingham Heart Study is not freely available due to patient confidentiality. The Framingham Heart Study has a formal process for requesting data, and anyone can request data directly from this via: https://www.framinghamheartstudy.org/researchers/application-review.php.  
-
-In lieu of the actual data, we provide a synthetic data set named simdata.txt. The size and structure of these data are identical to the actual data set, allowing the exact same code to be used to perform the Bayesian analysis on it. The files and data are described in the following and in the file DualNHoodBiosSuppAppend.pdf in PDF format.
+Data from the Framingham Heart Study is not freely available due to patient confidentiality. The Framingham Heart Study has a formal process for requesting data, and anyone can request data directly from this via: https://www.framinghamheartstudy.org/researchers/application-review.php. In lieu of the actual data, we provide a synthetic data set named simdata.txt. The size and structure of these data are identical to the actual data set, allowing the exact same code to be used to perform the Bayesian analysis on it. The files and data are described in the following and in the file DualNHoodBiosSuppAppend.pdf in PDF format.
 
 Relevant files
 
