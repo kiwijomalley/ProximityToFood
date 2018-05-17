@@ -6,7 +6,7 @@ model {
        + (be[18]*female[1] + be[19]*male[1])*cDistHome[1] + (be[20]*female[1] + be[21]*male[1])*cDistWork[1] 
        + (be[22]*female[1] + be[23]*male[1])*cDriveDist[1]
        + mu[ID[1], 1] + mu[ID[1], 2]*wave[1] + th[TractHome[1], 1] + th[TractWork[1], 2]*employ[1];
-  isigma.e[1] <- isigma;
+   isigma.e[1] <- isigma;
 
    waveterms[1] <- be[2]*wave2[1] + be[3]*wave3[1] + be[4]*wave4[1] + be[5]*wave5[1] 
                    + be[6]*wave6[1] + be[7]*wave7[1] + be[8]*wave8[1];
@@ -28,6 +28,8 @@ model {
    cDistWork[1] <- (DistWork[1] - mean(DistWork[]))*employ[1]; #Only non-zero for employed individuals
    cDriveDist[1] <- (DriveDist[1] - mean(DriveDist[]))*employ[1]; #Only non-zero for employed individuals
    Omni[1] ~ dunif(0,1);
+   Tobs[1] ~ dunif(0,8);
+   R2[1] <- pow(BMI[1] - pred[1], 2);
     
    for (i in 2:length(ID)) {
       BMI[i] ~ dnorm(la[i],isigma.e[i]);
@@ -37,8 +39,8 @@ model {
           + (be[18]*female[i] + be[19]*male[i])*cDistHome[i] + (be[20]*female[i] + be[21]*male[i])*cDistWork[i] 
           + (be[22]*female[i] + be[23]*male[i])*cDriveDist[i]
           + mu[ID[i], 1] + mu[ID[i], 2]*wave[i] + th[TractHome[i], 1] + th[TractWork[i], 2]*employ[i];
-      isigma.e[i] <- (1+ pow(rho, 2)*nfst[i])*isigma;
-      nfst[i] <- step(Tobs[i]-1);
+      isigma.e[i] <- isigma/(1 - pow(rho, 2)*nfst[i]);
+      nfst[i] <- 1 - step(ID[i] - ID[i-1] - 0.5); #Subtract 0.5 for the exact inequality
 
       waveterms[i] <- be[2]*wave2[i] + be[3]*wave3[i] + be[4]*wave4[i] + be[5]*wave5[i] 
                       + be[6]*wave6[i] + be[7]*wave7[i] + be[8]*wave8[i];
@@ -60,6 +62,8 @@ model {
       cDistWork[i] <- (DistWork[i] - mean(DistWork[]))*employ[i]; #Only non-zero for employed individuals
       cDriveDist[i] <- (DriveDist[i] - mean(DriveDist[]))*employ[i]; #Only non-zero for employed individuals
       Omni[i] ~ dunif(0,1);
+      Tobs[i] ~ dunif(0,8);
+      R2[i] <- pow(BMI[i] - pred[i], 2);
    }
 
    #Distribution for random effects
@@ -100,6 +104,7 @@ model {
 
    #Derived quantities of interest
    iccind <- taurand[1,1]/(taurand[1,1]+sigma);
-   bothfdist <- (1 - step(be[18]))*(1 - step(be[20]));
-   onefdist <- 1 - step(be[18])*step(be[20]);
+   bothfdist <- (1 - step(be[18]))*(1 - step(be[21])); #Female home and male work
+   onefdist <- 1 - step(be[18])*step(be[21]);
+   Rsquare <- 1-mean(R2[])/pow(sd(BMI[]),2);
 }
