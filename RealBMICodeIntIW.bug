@@ -1,0 +1,110 @@
+model {
+   BMI[1] ~ dnorm(la[1],isigma.e[1]);
+   la[1] <- pred[1];
+   pred[1] <- be[1] + waveterms[1] + be[9]*male[1] + be[10]*cyob[1] + be[11]*smokes[1] + be[12]*married[1] + be[13]*educ1[1] 
+       + be[14]*educ2[1] + be[15]*employ[1] + be[16]*ctractpov[1] + be[17]*cetractpov[1]*employ[1]
+       + (be[18]*female[1] + be[19]*male[1])*cDistHome[1] + (be[20]*female[1] + be[21]*male[1])*cDistWork[1] 
+       + (be[22]*female[1] + be[23]*male[1])*cDriveDist[1]
+       + mu[ID[1], 1] + mu[ID[1], 2]*wave[1] + th[TractHome[1], 1] + th[TractWork[1], 2]*employ[1];
+   isigma.e[1] <- isigma;
+
+   waveterms[1] <- be[2]*wave2[1] + be[3]*wave3[1] + be[4]*wave4[1] + be[5]*wave5[1] 
+                   + be[6]*wave6[1] + be[7]*wave7[1] + be[8]*wave8[1];
+   wave2[1] <- equals(wave[1], 2);
+   wave3[1] <- equals(wave[1], 3);
+   wave4[1] <- equals(wave[1], 4);
+   wave5[1] <- equals(wave[1], 5);
+   wave6[1] <- equals(wave[1], 6);
+   wave7[1] <- equals(wave[1], 7);
+   wave8[1] <- equals(wave[1], 8);
+   educ1[1] <- equals(educ[1], 1);
+   educ2[1] <- equals(educ[1], 2);
+   female[1] <- 1 - male[1];
+   employ[1] <- 1 - unemploy[1];
+   cyob[1] <- yob[1] - mean(yob[]);
+   ctractpov[1] <- tractpov[1] - mean(tractpov[]);
+   cetractpov[1] <- (etractpov[1] - mean(etractpov[]))*employ[1];
+   cDistHome[1] <- DistHome[1] - mean(DistHome[]);
+   cDistWork[1] <- (DistWork[1] - mean(DistWork[]))*employ[1]; #Only non-zero for employed individuals
+   cDriveDist[1] <- (DriveDist[1] - mean(DriveDist[]))*employ[1]; #Only non-zero for employed individuals
+   Omni[1] ~ dunif(0,1);
+   Tobs[1] ~ dunif(0,8);
+   R2[1] <- pow(BMI[1] - pred[1], 2);
+    
+   for (i in 2:length(ID)) {
+      BMI[i] ~ dnorm(la[i],isigma.e[i]);
+      la[i] <- pred[i] + rho*(BMI[i-1] - pred[i-1])*nfst[i];
+      pred[i] <- be[1] + waveterms[i] + be[9]*male[i] + be[10]*cyob[i] + be[11]*smokes[i] + be[12]*married[i] + be[13]*educ1[i] 
+          + be[14]*educ2[i] + be[15]*employ[i] + be[16]*ctractpov[i] + be[17]*cetractpov[i]*employ[i]
+          + (be[18]*female[i] + be[19]*male[i])*cDistHome[i] + (be[20]*female[i] + be[21]*male[i])*cDistWork[i] 
+          + (be[22]*female[i] + be[23]*male[i])*cDriveDist[i]
+          + mu[ID[i], 1] + mu[ID[i], 2]*wave[i] + th[TractHome[i], 1] + th[TractWork[i], 2]*employ[i];
+      isigma.e[i] <- isigma/(1 - pow(rho, 2)*nfst[i]);
+      nfst[i] <- 1 - step(ID[i] - ID[i-1] - 0.5); #Subtract 0.5 for the exact inequality
+
+      waveterms[i] <- be[2]*wave2[i] + be[3]*wave3[i] + be[4]*wave4[i] + be[5]*wave5[i] 
+                      + be[6]*wave6[i] + be[7]*wave7[i] + be[8]*wave8[i];
+      wave2[i] <- equals(wave[i], 2);
+      wave3[i] <- equals(wave[i], 3);
+      wave4[i] <- equals(wave[i], 4);
+      wave5[i] <- equals(wave[i], 5);
+      wave6[i] <- equals(wave[i], 6);
+      wave7[i] <- equals(wave[i], 7);
+      wave8[i] <- equals(wave[i], 8);
+      educ1[i] <- equals(educ[i], 1);
+      educ2[i] <- equals(educ[i], 2);
+      female[i] <- 1 - male[i];
+      employ[i] <- 1 - unemploy[i];
+      cyob[i] <- yob[i] - mean(yob[]);
+      ctractpov[i] <- tractpov[i] - mean(tractpov[]);
+      cetractpov[i] <- (etractpov[i] - mean(etractpov[]))*employ[i];
+      cDistHome[i] <- DistHome[i] - mean(DistHome[]);
+      cDistWork[i] <- (DistWork[i] - mean(DistWork[]))*employ[i]; #Only non-zero for employed individuals
+      cDriveDist[i] <- (DriveDist[i] - mean(DriveDist[]))*employ[i]; #Only non-zero for employed individuals
+      Omni[i] ~ dunif(0,1);
+      Tobs[i] ~ dunif(0,8);
+      R2[i] <- pow(BMI[i] - pred[i], 2);
+   }
+
+   #Distribution for random effects
+   for (j in 1:max(ID)) {
+      mu[j,1:2] ~ dmnorm(mn1[], itaurand[,]);
+   }
+
+   #Distribution for area effects
+   for (k in 1:max(TractHome)) {
+      th[k,1:2] ~ dmnorm(mn2[],itauarea[,]);
+   }
+
+   #Prior for fixed effects
+   for (k in 1:23) {
+      be[k] ~ dnorm(0,1.0E-6);
+   }
+   
+   #Hyper-priors
+   isigma ~ dgamma(1.0E-3,1.0E-3);
+   itaurand[1:2,1:2] ~ dwish(Omrand[,],df); 
+   itauarea[1:2,1:2] ~ dwish(Omarea[,],df); #Make 2nd param = df
+   df <- 4 #2, 4 or 13 for second parameter
+   u ~ dbeta(1,1); #dbeta(1,1) = unif
+   rho <- 2*u - 1;
+
+   mn1[1] <- 0; mn1[2] <- 0;
+   mn2[1] <- 0; mn2[2] <- 0; 
+   Omrand[1,1] <- 1; Omrand[1,2] <- 0; Omrand[2,1] <- 0; Omrand[2,2] <- 1;
+   Omarea[1,1] <- OmareaMn; Omarea[1,2] <- 0; Omarea[2,1] <- 0; Omarea[2,2] <- OmareaMn;
+   OmareaMn <- 1*(df - 3); #To ensure prior mean is 0.1, supply inverse of scaled mean to Wishart
+
+   #Inverse of variances and covariance matrices
+   sigma <- 1.0/isigma;
+   taurand[1:2,1:2] <- inverse(itaurand[,]);
+   tauarea[1:2,1:2] <- inverse(itauarea[,]);
+   corrand <- taurand[1,2]/sqrt(taurand[1,1]*taurand[2,2]);
+   corarea <- tauarea[1,2]/sqrt(tauarea[1,1]*tauarea[2,2]);
+
+   #Derived quantities of interest
+   iccind <- taurand[1,1]/(taurand[1,1]+sigma);
+   bothfdist <- (1 - step(be[18]))*(1 - step(be[21])); #Female home and male work
+   onefdist <- 1 - step(be[18])*step(be[21]);
+   Rsquare <- 1-mean(R2[])/pow(sd(BMI[]),2);
+}
