@@ -130,9 +130,9 @@ plot(density(mcmcChain[,"be[18]"]),xlab="",ylab="Density",
 plot(density(mcmcChain[,"be[21]"]),xlab="",ylab="Density",
  main="Work distance to FF effect for males")
 plot(density(mcmcChain[,"tauarea[1,1]"]),xlab="",ylab="Density",
- main="Residential Std. Dev.")
+ main="Residential Variance")
 plot(density(mcmcChain[,"tauarea[2,2]"]),xlab="",ylab="Density",
- main="Workplace Std. Dev.")
+ main="Workplace Variance")
 plot(density(mcmcChain[,"corrand"]),xlab="",ylab="Density",
  main="Correlation of individual random effects")
 plot(density(mcmcChain[,"corarea"]),xlab="",ylab="Density",
@@ -157,6 +157,11 @@ print(c(prHypW,prHypM,prJointHyp))
 #Posterior correlation between error variance and serial correlation
 cor(mcmcChain[,"sigma"],mcmcChain[,"rho"])
 
-
+#Check if posterior distributions are highly skewed
+par(mfrow=c(2,1), srt=0, mai=c(0.6, 0.6, 0.4, 0.2), mgp=c(2,1,0))
+plot(density(mcmcChain[,"sigma"]),xlab="",ylab="Density",
+ main="Variance of residuals")
+plot(density(mcmcChain[,"rho"]),xlab="",ylab="Density",
+ main="Serial correlation of residuals")
 
  
